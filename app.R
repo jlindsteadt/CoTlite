@@ -7,8 +7,8 @@ library(ggplot2)
 library(tidyr)
 library(forcats)
 
-source('mod_data_import.R')
-source('mod_COT.R')
+#source('mod_data_import.R')
+#source('mod_COT.R')
 
 
 ui <- fluidPage(
