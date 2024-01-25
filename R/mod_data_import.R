@@ -52,7 +52,7 @@ mod_data_import_server <- function(id, r){
         'CFTC/095741_F_L_ALL',
         'CFTC/099741_F_ALL', # Euro
         'CFTC/099741_F_L_ALL',
-        'CFTC/096742_F_ALL'#, # British Pound
+        'CFTC/096742_F_ALL', # British Pound
         'CFTC/096742_F_L_ALL',
         'CFTC/13874A_F_ALL', # S&P e-mini
         'CFTC/13874A_F_L_ALL',
