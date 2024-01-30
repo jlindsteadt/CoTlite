@@ -12,6 +12,7 @@ library(forcats)
 
 
 ui <- fluidPage(
+  #mod_data_import_ui('data_import')#,
   mod_CoT_ui("CoT_1")
 )
 

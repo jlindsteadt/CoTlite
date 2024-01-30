@@ -8,6 +8,7 @@ mod_CoT_ui <- function(id){
       dashboardBody(
             tabsetPanel(
               tabPanel('Extreme Net Positions',
+#                       verbatimTextOutput(ns('data'))#,
                        column(4,
                               uiOutput(ns('CoT_net_position_date'))
                               #selectizeInput(ns('CoT_net_position_date'), 'Report Date', choices=NULL)
@@ -46,7 +47,6 @@ mod_CoT_ui <- function(id){
                        column(12,
                               plotOutput(ns('CoT_Breakdown_plot'), height=600)
                        )
-
               ),
               tabPanel('Financial Detail',
                        column(4,
@@ -71,6 +71,13 @@ mod_CoT_ui <- function(id){
 mod_CoT_server <- function(id, r){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+
+    output$data <- renderPrint({
+      #x <- r$CoT_data
+      x <- CoT_data_tbl()
+      #x <- as_tibble(readRDS("./R/CoT_data_raw.RDS"))
+      x
+    })
 
     output$CoT_contract_select <- renderUI({
       x <- CoT_data_tbl() %>%
@@ -128,7 +135,7 @@ mod_CoT_server <- function(id, r){
       data <- r$CoT_data %>%
         as_tibble() %>%
         pivot_longer(cols=-Date, names_to='name', values_to='value') %>%
-        separate(name, c('product', 'report'), sep=" - ", remove=TRUE) %>%
+        tidyr::separate_wider_delim(., cols=name, names=c('product', 'report'), delim=" - ", cols_remove=TRUE) %>%
         mutate(contract = case_when(product == 'CFTC.134741_F_ALL' ~ '3-Month SOFR',
                                     product == 'CFTC.042601_F_ALL' ~ '2yr T Note',
                                     product == 'CFTC.044601_F_ALL' ~ '5yr T Note',
